@@ -144,6 +144,22 @@ export function TextAreaField({
   return <Textarea value={value} placeholder={placeholder} rows={rows} onChange={(e) => onChange(e.target.value)} />;
 }
 
+export function PrototypeBanner() {
+  return (
+    <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 sm:px-8 lg:px-0">
+      <div className="mx-auto flex max-w-4xl items-start gap-2.5">
+        <sgds-icon name="exclamation-triangle-fill" size="md" className="mt-0.5 shrink-0 text-amber-600"></sgds-icon>
+        <p className="text-body-sm text-amber-900">
+          <span className="font-semibold">This is a prototype.</span> It was built to help stakeholders visualise
+          what a possible future version of this form could look like, and does not account for any platform or
+          system limitations. Please manage your expectations accordingly — some things may work better, or worse,
+          than a real implementation would.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function InfoAlert({
   variant = "info",
   title,
