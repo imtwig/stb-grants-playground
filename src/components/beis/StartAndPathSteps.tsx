@@ -9,7 +9,7 @@ export function StartStep() {
   const { goTo, loadSample } = useBeis();
   return (
     <div className="mx-auto max-w-3xl px-6 py-14 sm:px-8 lg:px-0">
-      <p className="mb-2 text-body-sm font-medium uppercase tracking-wide text-primary-600">
+      <p className="mb-2 text-body-sm font-medium uppercase tracking-wide text-blue-600">
         Singapore Tourism Board
       </p>
       <h1 className="text-heading-xl font-semibold text-zinc-900">
@@ -30,7 +30,7 @@ export function StartStep() {
           "Supporting documents",
         ].map((item, i) => (
           <li key={item} className="flex items-start gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-50 text-body-sm font-semibold text-primary-700">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 text-body-sm font-semibold text-blue-700">
               {i + 1}
             </span>
             <span className="text-body-md text-zinc-800">{item}</span>
@@ -80,7 +80,7 @@ export function PathStep() {
             className={cn(
               "rounded-xl border p-5 text-left transition-colors cursor-pointer",
               app.supportType === opt.value
-                ? "border-primary-600 bg-primary-50 ring-1 ring-primary-600"
+                ? "border-blue-600 bg-blue-50 ring-1 ring-blue-600"
                 : "border-zinc-200 bg-white hover:border-zinc-300"
             )}
           >
@@ -102,7 +102,7 @@ export function PathStep() {
                 className={cn(
                   "rounded-lg border px-4 py-3 text-left text-body-sm font-medium transition-colors cursor-pointer",
                   app.eventType === opt.value
-                    ? "border-primary-600 bg-primary-50 text-primary-700"
+                    ? "border-blue-600 bg-blue-50 text-blue-700"
                     : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300"
                 )}
               >
