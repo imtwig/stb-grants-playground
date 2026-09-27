@@ -20,7 +20,7 @@ export function PageHeader({
   return (
     <div className="sgds:mb-8">
       {eyebrow && (
-        <p className="sgds:mb-1 sgds:text-body-sm sgds:font-medium sgds:text-primary-600 sgds:uppercase sgds:tracking-wide">
+        <p className="sgds:mb-1 sgds:text-body-sm sgds:font-medium sgds:text-primary-default sgds:uppercase sgds:tracking-wide">
           {eyebrow}
         </p>
       )}
@@ -178,7 +178,7 @@ export function YesNoToggle({ value, onChange }: { value: boolean | null; onChan
         className={cn(
           "rounded-md border px-5 py-2 text-body-sm font-medium transition-colors cursor-pointer",
           value === true
-            ? "border-primary-600 bg-primary-50 text-primary-700"
+            ? "border-blue-600 bg-blue-50 text-blue-700"
             : "border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50"
         )}
       >
@@ -190,7 +190,7 @@ export function YesNoToggle({ value, onChange }: { value: boolean | null; onChan
         className={cn(
           "rounded-md border px-5 py-2 text-body-sm font-medium transition-colors cursor-pointer",
           value === false
-            ? "border-primary-600 bg-primary-50 text-primary-700"
+            ? "border-blue-600 bg-blue-50 text-blue-700"
             : "border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50"
         )}
       >
@@ -260,16 +260,16 @@ export function StepNav() {
                 className={cn(
                   "flex items-center gap-2 rounded-full border px-3 py-1.5 text-body-sm font-medium transition-colors",
                   isCurrent
-                    ? "border-primary-600 bg-primary-600 text-white"
+                    ? "border-blue-600 bg-blue-600 text-white"
                     : isDone
-                    ? "border-primary-200 bg-primary-50 text-primary-700 cursor-pointer hover:bg-primary-100"
+                    ? "border-blue-200 bg-blue-50 text-blue-700 cursor-pointer hover:bg-blue-100"
                     : "border-zinc-200 bg-zinc-50 text-zinc-400 cursor-not-allowed"
                 )}
               >
                 <span
                   className={cn(
                     "flex h-5 w-5 items-center justify-center rounded-full text-[11px]",
-                    isCurrent ? "bg-white/20" : isDone ? "bg-primary-600 text-white" : "bg-zinc-200"
+                    isCurrent ? "bg-white/20 text-white" : isDone ? "bg-blue-600 text-white" : "bg-zinc-200"
                   )}
                 >
                   {isDone && !isCurrent ? "✓" : idx + 1}
