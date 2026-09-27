@@ -11,19 +11,25 @@ import { DocumentsStep } from "@/components/beis/DocumentsStep";
 import { DeclarationsStep } from "@/components/beis/DeclarationsStep";
 import { ReviewStep } from "@/components/beis/ReviewStep";
 import { ConfirmationStep } from "@/components/beis/ConfirmationStep";
-import { StepNav } from "@/components/beis/shared";
+import { PrototypeBanner, StepNav } from "@/components/beis/shared";
 
 function WizardBody() {
   const { app, section, reset } = useBeis();
 
   if (app.submitted) {
-    return <ConfirmationStep />;
+    return (
+      <div className="bg-white pb-16">
+        <PrototypeBanner />
+        <ConfirmationStep />
+      </div>
+    );
   }
 
   const showStepNav = section !== "start" && section !== "path";
 
   return (
     <div className="bg-white pb-16">
+      <PrototypeBanner />
       {showStepNav && (
         <div className="mx-auto max-w-4xl px-6 pt-8 sm:px-8 lg:px-0">
           <div className="flex items-center justify-between">
