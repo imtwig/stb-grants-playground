@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useBeis } from "@/lib/beis/context";
 import { lookupUenMock } from "@/lib/beis/mock-data";
 import type { KeyPerson, Shareholder } from "@/lib/beis/types";
-import { Field, InfoAlert, PageHeader, SectionCard, TextAreaField, TextField, WizardFooter } from "./shared";
+import { CountryCodeField, Field, InfoAlert, PageHeader, SectionCard, TextAreaField, TextField, WizardFooter } from "./shared";
 import { Plus, Trash2 } from "lucide-react";
 
 function uid() {
@@ -167,7 +167,14 @@ export function OrganisationStep() {
             <TextField value={org.contact.designation} onChange={(v) => setOrg("contact", { ...org.contact, designation: v })} placeholder="e.g. Finance Director" />
           </Field>
           <Field label="Phone number" required>
-            <TextField value={org.contact.phone} onChange={(v) => setOrg("contact", { ...org.contact, phone: v })} placeholder="+65 9123 4567" />
+            <div className="flex gap-2">
+              <div className="w-28 shrink-0">
+                <CountryCodeField value={org.contact.countryCode} onChange={(v) => setOrg("contact", { ...org.contact, countryCode: v })} />
+              </div>
+              <div className="flex-1">
+                <TextField value={org.contact.phone} onChange={(v) => setOrg("contact", { ...org.contact, phone: v })} placeholder="9123 4567" />
+              </div>
+            </div>
           </Field>
           <Field label="Email" required>
             <TextField type="email" value={org.contact.email} onChange={(v) => setOrg("contact", { ...org.contact, email: v })} placeholder="name@organisation.com.sg" />
