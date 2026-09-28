@@ -4,9 +4,34 @@ import { ReactNode } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useBeis } from "@/lib/beis/context";
 import { SECTIONS, STEP_SECTIONS } from "@/lib/beis/field-config";
+
+export const COUNTRY_CALLING_CODES: { country: string; code: string }[] = [
+  { country: "Australia", code: "+61" },
+  { country: "Brunei", code: "+673" },
+  { country: "Cambodia", code: "+855" },
+  { country: "China", code: "+86" },
+  { country: "Hong Kong", code: "+852" },
+  { country: "India", code: "+91" },
+  { country: "Indonesia", code: "+62" },
+  { country: "Japan", code: "+81" },
+  { country: "Laos", code: "+856" },
+  { country: "Malaysia", code: "+60" },
+  { country: "Myanmar", code: "+95" },
+  { country: "New Zealand", code: "+64" },
+  { country: "Philippines", code: "+63" },
+  { country: "Singapore", code: "+65" },
+  { country: "South Korea", code: "+82" },
+  { country: "Taiwan", code: "+886" },
+  { country: "Thailand", code: "+66" },
+  { country: "United Arab Emirates", code: "+971" },
+  { country: "United Kingdom", code: "+44" },
+  { country: "United States / Canada", code: "+1" },
+  { country: "Vietnam", code: "+84" },
+];
 
 export function PageHeader({
   title,
@@ -80,6 +105,26 @@ export function TextField({
   type?: string;
 }) {
   return <Input type={type} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />;
+}
+
+export function CountryCodeField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const selected = COUNTRY_CALLING_CODES.find((c) => c.code === value);
+  return (
+    <Select value={value} onValueChange={(v) => onChange(v ?? "")}>
+      <SelectTrigger className="w-full">
+        <SelectValue placeholder="Select country">
+          {() => (selected ? selected.code : "Select country")}
+        </SelectValue>
+      </SelectTrigger>
+      <SelectContent>
+        {COUNTRY_CALLING_CODES.map((c) => (
+          <SelectItem key={c.country} value={c.code}>
+            {c.country} ({c.code})
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
 }
 
 export function NumberField({

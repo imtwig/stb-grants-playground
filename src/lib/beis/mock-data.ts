@@ -17,7 +17,7 @@ export function createEmptyApplication(): BeisApplication {
       boardOfDirectors: [],
       keyShareholders: [],
       financialInfo: { lastFYRevenue: "", lastFYNetProfit: "", paidUpCapital: "" },
-      contact: { name: "", designation: "", phone: "", email: "" },
+      contact: { name: "", designation: "", countryCode: "", phone: "", email: "" },
     },
     projectEvent: {
       title: "",
@@ -94,7 +94,7 @@ export function createSampleApplication(): BeisApplication {
         { id: "sh2", name: "Lim Mei Ling", idNumber: "S7845678D", nationality: "Singaporean", shareholdingPercent: "30" },
       ],
       financialInfo: { lastFYRevenue: "8500000", lastFYNetProfit: "620000", paidUpCapital: "1000000" },
-      contact: { name: "Priya Nair", designation: "Finance Director", phone: "+65 9123 4567", email: "priya.nair@meridianexpo.com.sg" },
+      contact: { name: "Priya Nair", designation: "Finance Director", countryCode: "+65", phone: "9123 4567", email: "priya.nair@meridianexpo.com.sg" },
     },
     projectEvent: {
       title: "Asia Maritime & Logistics Expo 2027",
