@@ -5,6 +5,8 @@ import type { BeisApplication, SectionKey } from "./types";
 import { createEmptyApplication, createSampleApplication } from "./mock-data";
 import { STEP_SECTIONS } from "./field-config";
 
+export type FormMode = "stepper" | "long";
+
 interface BeisContextValue {
   app: BeisApplication;
   setApp: React.Dispatch<React.SetStateAction<BeisApplication>>;
@@ -19,6 +21,8 @@ interface BeisContextValue {
   reset: () => void;
   draftSavedAt: string | null;
   saveDraft: () => void;
+  formMode: FormMode;
+  setFormMode: (mode: FormMode) => void;
 }
 
 const BeisContext = createContext<BeisContextValue | null>(null);
@@ -32,6 +36,7 @@ export function BeisProvider({ children }: { children: React.ReactNode }) {
   const [section, setSection] = useState<SectionKey>("start");
   const [completedSections, setCompletedSections] = useState<Set<SectionKey>>(new Set());
   const [draftSavedAt, setDraftSavedAt] = useState<string | null>(null);
+  const [formMode, setFormMode] = useState<FormMode>("stepper");
 
   const update = useCallback(<K extends keyof BeisApplication>(key: K, value: BeisApplication[K]) => {
     setApp((prev) => ({ ...prev, [key]: value }));
@@ -89,6 +94,7 @@ export function BeisProvider({ children }: { children: React.ReactNode }) {
   const value: BeisContextValue = {
     app, setApp, update, section, goTo, goNext, goBack,
     completedSections, markComplete, loadSample, reset, draftSavedAt, saveDraft,
+    formMode, setFormMode,
   };
 
   return <BeisContext.Provider value={value}>{children}</BeisContext.Provider>;

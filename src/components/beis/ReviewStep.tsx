@@ -18,7 +18,7 @@ import { InfoAlert, PageHeader, ReviewRow, SectionCard } from "./shared";
 const REQUIRED_SECTIONS: SectionKey[] = STEP_SECTIONS.filter((s) => s !== "review");
 
 export function ReviewStep() {
-  const { app, update, goTo, completedSections, goBack, saveDraft } = useBeis();
+  const { app, update, goTo, completedSections, goBack, saveDraft, formMode } = useBeis();
   const org = app.organisation;
   const pe = app.projectEvent;
   const duration = eventDurationDays(pe.startDate, pe.endDate);
@@ -31,7 +31,8 @@ export function ReviewStep() {
     if (s === "profile") return app.eventType === "exhibition" || app.eventType === "trade-conference";
     return true;
   });
-  const allComplete = sectionsToShow.every((s) => completedSections.has(s));
+  const isSectionDone = (s: SectionKey) => formMode === "long" || completedSections.has(s);
+  const allComplete = formMode === "long" || sectionsToShow.every((s) => completedSections.has(s));
 
   function handleSubmit() {
     if (!app.declarations.confirmed || !allComplete) return;
@@ -53,7 +54,7 @@ export function ReviewStep() {
       )}
 
       <div className="space-y-3">
-        <ReviewSectionBlock title="Organisation" complete={completedSections.has("organisation")} onEdit={() => goTo("organisation")}>
+        <ReviewSectionBlock title="Organisation" complete={isSectionDone("organisation")} onEdit={() => goTo("organisation")}>
           <ReviewRow label="Organisation name" value={org.organisationName} />
           <ReviewRow label="UEN" value={org.uen} />
           <ReviewRow label="Country of incorporation" value={org.countryOfIncorporation} />
@@ -62,7 +63,7 @@ export function ReviewStep() {
           <ReviewRow label="Board of directors" value={`${org.boardOfDirectors.length} added`} />
         </ReviewSectionBlock>
 
-        <ReviewSectionBlock title="Project / event" complete={completedSections.has("project")} onEdit={() => goTo("project")}>
+        <ReviewSectionBlock title="Project / event" complete={isSectionDone("project")} onEdit={() => goTo("project")}>
           <ReviewRow label="Type of support" value={supportLabel} />
           <ReviewRow label="Event type" value={app.eventType ? EVENT_TYPE_LABELS[app.eventType] : ""} />
           <ReviewRow label="Title" value={pe.title} />
@@ -71,18 +72,18 @@ export function ReviewStep() {
         </ReviewSectionBlock>
 
         {sectionsToShow.includes("profile") && (
-          <ReviewSectionBlock title="Event profile" complete={completedSections.has("profile")} onEdit={() => goTo("profile")}>
+          <ReviewSectionBlock title="Event profile" complete={isSectionDone("profile")} onEdit={() => goTo("profile")}>
             <ReviewRow label="Year of event" value={app.eventProfile.yearOfEvent} />
             <ReviewRow label="Total exhibitors" value={app.eventProfile.totalExhibitors} />
           </ReviewSectionBlock>
         )}
 
-        <ReviewSectionBlock title="Attendees" complete={completedSections.has("attendees")} onEdit={() => goTo("attendees")}>
+        <ReviewSectionBlock title="Attendees" complete={isSectionDone("attendees")} onEdit={() => goTo("attendees")}>
           <ReviewRow label="Total attendees" value={totals.totalAttendees.toLocaleString("en-SG")} />
           <ReviewRow label="Foreign participants" value={`${totals.foreignPercent.toFixed(1)}%`} />
         </ReviewSectionBlock>
 
-        <ReviewSectionBlock title="Project costs" complete={completedSections.has("costs")} onEdit={() => goTo("costs")}>
+        <ReviewSectionBlock title="Project costs" complete={isSectionDone("costs")} onEdit={() => goTo("costs")}>
           <ReviewRow label="Cost items" value={`${app.costs.length} added`} />
           <ReviewRow label="Estimated total project costs" value={formatSgd(totalCosts)} />
           {app.costs.slice(0, 3).map((c) => (
@@ -90,11 +91,11 @@ export function ReviewStep() {
           ))}
         </ReviewSectionBlock>
 
-        <ReviewSectionBlock title="Supporting documents" complete={completedSections.has("documents")} onEdit={() => goTo("documents")}>
+        <ReviewSectionBlock title="Supporting documents" complete={isSectionDone("documents")} onEdit={() => goTo("documents")}>
           <ReviewRow label="Documents uploaded" value={`${Object.values(app.documents.uploads).filter(Boolean).length} uploaded`} />
         </ReviewSectionBlock>
 
-        <ReviewSectionBlock title="Declarations" complete={completedSections.has("declarations")} onEdit={() => goTo("declarations")}>
+        <ReviewSectionBlock title="Declarations" complete={isSectionDone("declarations")} onEdit={() => goTo("declarations")}>
           <ReviewRow label="Authorised by" value={app.declarations.authorisation.name} />
           <ReviewRow label="Criminal proceedings" value={app.declarations.criminalProceedings.answer === null ? "" : app.declarations.criminalProceedings.answer ? "Yes" : "No"} />
           <ReviewRow label="Other grants received" value={app.declarations.otherGrants.answer === null ? "" : app.declarations.otherGrants.answer ? "Yes" : "No"} />
