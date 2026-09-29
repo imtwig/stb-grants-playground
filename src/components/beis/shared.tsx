@@ -189,17 +189,54 @@ export function TextAreaField({
   return <Textarea value={value} placeholder={placeholder} rows={rows} onChange={(e) => onChange(e.target.value)} />;
 }
 
+export function FormModeToggle() {
+  const { formMode, setFormMode } = useBeis();
+  return (
+    <div className="inline-flex shrink-0 rounded-full border border-amber-300 bg-white p-1 text-body-sm">
+      <button
+        type="button"
+        onClick={() => setFormMode("stepper")}
+        className={cn(
+          "cursor-pointer rounded-full px-3 py-1 font-medium transition-colors",
+          formMode === "stepper" ? "bg-amber-600 text-white" : "text-amber-900 hover:bg-amber-50"
+        )}
+      >
+        Step by step form
+      </button>
+      <button
+        type="button"
+        onClick={() => setFormMode("long")}
+        className={cn(
+          "cursor-pointer rounded-full px-3 py-1 font-medium transition-colors",
+          formMode === "long" ? "bg-amber-600 text-white" : "text-amber-900 hover:bg-amber-50"
+        )}
+      >
+        Long form
+      </button>
+    </div>
+  );
+}
+
 export function PrototypeBanner() {
+  const { app } = useBeis();
+  const showModeToggle = !app.submitted;
   return (
     <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 sm:px-8 lg:px-0">
-      <div className="mx-auto flex max-w-4xl items-start gap-2.5">
-        <sgds-icon name="exclamation-triangle-fill" size="md" className="mt-0.5 shrink-0 text-amber-600"></sgds-icon>
-        <p className="text-body-sm text-amber-900">
-          <span className="font-semibold">This is a prototype.</span> It was built to help stakeholders visualise
-          what a possible future version of this form could look like, and does not account for any platform or
-          system limitations. Please manage your expectations accordingly — some things may work better, or worse,
-          than a real implementation would.
-        </p>
+      <div className="mx-auto max-w-4xl">
+        <div className="flex items-start gap-2.5">
+          <sgds-icon name="exclamation-triangle-fill" size="md" className="mt-0.5 shrink-0 text-amber-600"></sgds-icon>
+          <p className="text-body-sm text-amber-900">
+            <span className="font-semibold">This is a prototype.</span> It was built to help stakeholders visualise
+            what a possible future version of this form could look like, and does not account for any platform or
+            system limitations. Please manage your expectations accordingly — some things may work better, or worse,
+            than a real implementation would.
+          </p>
+        </div>
+        {showModeToggle && (
+          <div className="mt-1.5 pl-7">
+            <FormModeToggle />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -274,7 +311,8 @@ export function WizardFooter({
   backLabel?: string;
   hideBack?: boolean;
 }) {
-  const { saveDraft } = useBeis();
+  const { saveDraft, formMode } = useBeis();
+  if (formMode === "long") return null;
   return (
     <div className="mt-8 flex flex-col-reverse items-stretch justify-between gap-3 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center">
       <div>
